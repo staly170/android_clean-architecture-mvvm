@@ -1,4 +1,4 @@
-# 💳 NestPay - 간편결제 Android 앱
+# NestPay - 간편결제 앱
 
 > **Clean Architecture + MVVM 패턴**을 적용한 핀테크 결제 애플리케이션
 
@@ -11,7 +11,7 @@
 
 ---
 
-## 📋 프로젝트 개요
+## ※ 프로젝트 개요
 
 | 항목 | 내용 |
 |------|------|
@@ -20,9 +20,11 @@
 | **개발 인원** | 1명 (100% 단독 개발) |
 | **담당 역할** | 설계 → 개발 → 테스트 → 배포 전 과정 |
 
+> ⚠️ **Note**: 이 레포지토리는 포트폴리오용으로, 핵심 아키텍처 구조만 포함되어 있습니다.
+
 ---
 
-## 🏛️ 아키텍처
+## ※ 아키텍처
 
 ### Clean Architecture + MVVM
 
@@ -44,7 +46,7 @@
 │                     └──────┬──────┘                             │
 │                            │                                    │
 │                     ┌──────▼──────┐                             │
-│                     │ Repository  │  ◀── Interface (추상화)     │
+│                     │ Repository  │  ◀── Interface (추상화)       │
 │                     │ (Interface) │                             │
 │                     └──────┬──────┘                             │
 │                            │                                    │
@@ -52,7 +54,7 @@
 │                       Data Layer                                │
 │                            │                                    │
 │                     ┌──────▼──────┐                             │
-│                     │ Repository  │  ◀── 구현체                 │
+│                     │ Repository  │  ◀── 구현체                   │
 │                     │   (Impl)    │                             │
 │                     └──────┬──────┘                             │
 │                            │                                    │
@@ -67,59 +69,67 @@
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 프로젝트 구조
+---
+
+## ※ 프로젝트 구조
 
 ```
 📦 com.nestpay.pg
 │
-├── 📂 data                          # Data Layer
-│   ├── 📂 api                       # Retrofit API 정의
-│   │   ├── ApiClient.kt             # Base URL 설정
-│   │   └── ApiInterface.kt          # API 엔드포인트 정의
+├── 📂 data                              # Data Layer
+│   ├── 📂 api
+│   │   ├── ApiClient.kt                 # Base URL 설정
+│   │   └── ApiInterface.kt              # Retrofit API 정의
 │   │
-│   ├── 📂 db                        # Room Database
-│   │   ├── OrderDao.kt              # DAO 인터페이스
-│   │   ├── OrderDatabase.kt         # Database 클래스
-│   │   └── OrderTypeConverter.kt    # Type Converter
+│   ├── 📂 db                            # Room Database
+│   │   ├── OrderDao.kt
+│   │   ├── OrderDatabase.kt
+│   │   └── OrderTypeConverter.kt
 │   │
-│   ├── 📂 di                        # Hilt DI Modules
-│   │   ├── ApiModule.kt             # Network 관련 DI
-│   │   ├── LocalDataModule.kt       # Local DB 관련 DI
-│   │   ├── RemoteDataModule.kt      # Remote DataSource DI
-│   │   └── RepositoryModule.kt      # Repository DI
+│   ├── 📂 di                            # Hilt DI Modules
+│   │   ├── ApiModule.kt                 # Network DI
+│   │   ├── LocalDataModule.kt           # Local DB DI
+│   │   ├── RemoteDataModule.kt          # Remote DataSource DI
+│   │   └── RepositoryModule.kt          # Repository DI
 │   │
-│   ├── 📂 mapper                    # DTO ↔ Domain 변환
-│   │   └── Mapper.kt
+│   ├── 📂 mapper
+│   │   └── Mapper.kt                    # DTO ↔ Domain 변환
 │   │
-│   ├── 📂 model                     # Data Models (DTO)
-│   │   ├── 📂 local                 # Local Entity
-│   │   └── 📂 remote                # API Response/Request
+│   ├── 📂 model
+│   │   ├── 📂 local                     # Room Entity
+│   │   └── 📂 remote                    # API Response DTO
 │   │
-│   └── 📂 repository                # Repository 구현체
-│       ├── 📂 local                 # Local Repository Impl
-│       └── 📂 remote                # Remote Repository Impl
+│   └── 📂 repository
+│       ├── 📂 local                     # Local Repository
+│       │   ├── datasource/
+│       │   └── repository/
+│       └── 📂 remote                    # Remote Repository
+│           ├── datasource/
+│           └── repository/
 │
-├── 📂 domain                        # Domain Layer
+├── 📂 domain                            # Domain Layer
 │   ├── 📂 base
-│   │   └── BaseUseCase.kt           # UseCase 추상 클래스
+│   │   └── BaseUseCase.kt               # UseCase 추상 클래스
 │   │
 │   ├── 📂 di
-│   │   └── UseCaseModule.kt         # UseCase DI
+│   │   └── UseCaseModule.kt             # UseCase DI
 │   │
-│   ├── 📂 model                     # Domain Models
+│   ├── 📂 model
+│   │   ├── 📂 local                     # Domain Model (Local)
+│   │   └── 📂 remote                    # Domain Model (Remote)
+│   │
+│   ├── 📂 repository                    # Repository Interface
 │   │   ├── 📂 local
 │   │   └── 📂 remote
 │   │
-│   ├── 📂 repository                # Repository Interface
-│   │   ├── 📂 local
-│   │   └── 📂 remote
-│   │
-│   └── 📂 usecase                   # Business Logic
-│       ├── 📂 local                 # Local UseCase
-│       └── 📂 remote                # Remote UseCase
+│   └── 📂 usecase
+│       ├── 📂 local
+│       │   └── GetOrderLocalUseCase.kt  # Local DB UseCase
+│       └── 📂 remote
+│           └── GetApiRepoUseCase.kt     # API UseCase
 │
-└── 📂 presentation                  # Presentation Layer
-    ├── 📂 base                      # Base Classes
+└── 📂 presentation                      # Presentation Layer
+    ├── 📂 base                          # Base Classes
     │   ├── BaseActivity.kt
     │   ├── BaseFragment.kt
     │   ├── BaseViewModel.kt
@@ -128,38 +138,39 @@
     │   └── BaseDialogFragment.kt
     │
     ├── 📂 di
-    │   └── PgApplication.kt         # Hilt Application
+    │   └── PgApplication.kt             # Hilt Application
     │
-    ├── 📂 view                      # UI Components
-    │   ├── MainActivity.kt
+    ├── 📂 view                          # UI (3개 화면 예시)
+    │   ├── MainActivity.kt              # Single Activity
     │   ├── SplashActivity.kt
-    │   ├── 📂 auth                  # 인증 관련 화면
-    │   ├── 📂 login                 # 로그인 화면
-    │   ├── 📂 main                  # 메인 화면
-    │   └── 📂 adapter               # RecyclerView Adapters
+    │   ├── 📂 main
+    │   │   ├── MainFragment.kt          # 🏠 메인 (주문 목록)
+    │   │   ├── PaymentFragment.kt       # 📋 상세 (결제/주문)
+    │   │   └── MypageFragment.kt        # ⚙️ 설정 (마이페이지)
+    │   └── 📂 adapter
+    │       └── PayListAdapter.kt
     │
-    ├── 📂 viewmodel                 # ViewModels
+    ├── 📂 viewmodel
     │   ├── MainViewModel.kt
-    │   ├── LoginViewModel.kt
-    │   ├── AuthViewModel.kt
-    │   ├── PaymentViewModel.kt
-    │   └── PopupViewModel.kt
+    │   └── PaymentViewModel.kt
     │
-    └── 📂 widget                    # 유틸리티
-        ├── 📂 extension             # Kotlin Extensions
-        └── 📂 utils                 # Utility Classes
+    └── 📂 widget
+        ├── 📂 extension                 # Kotlin Extensions
+        └── 📂 utils                     # Utility Classes
+            ├── ApiState.kt              # API 상태 sealed class
+            ├── DbState.kt               # DB 상태 sealed class
+            └── ...
 ```
 
 ---
 
-## 🛠️ 기술 스택
+## ※ 기술 스택
 
 ### Core
 | 기술 | 버전 | 설명 |
 |------|------|------|
 | **Kotlin** | 1.7.10 | 주 개발 언어 |
 | **Android SDK** | API 26+ | 타겟 SDK 32 |
-| **Gradle** | 7.3.3 | 빌드 도구 |
 
 ### Architecture & DI
 | 기술 | 설명 |
@@ -173,37 +184,24 @@
 | 기술 | 설명 |
 |------|------|
 | **ViewModel** | UI 상태 관리 |
-| **LiveData / StateFlow** | 반응형 데이터 스트림 |
+| **StateFlow / SharedFlow** | 반응형 데이터 스트림 |
 | **Room** | 로컬 데이터베이스 |
 | **DataBinding** | View ↔ ViewModel 바인딩 |
 | **Navigation** | Fragment 네비게이션 |
-| **Paging 3** | 페이징 처리 |
 
-### Network
+### Network & Async
 | 기술 | 설명 |
 |------|------|
 | **Retrofit 2** | REST API 클라이언트 |
 | **OkHttp** | HTTP 클라이언트 |
-| **Moshi** | JSON 직렬화/역직렬화 |
-
-### Async
-| 기술 | 설명 |
-|------|------|
-| **Coroutines** | 비동기 처리 |
-| **Flow** | 반응형 스트림 |
-
-### Etc
-| 기술 | 설명 |
-|------|------|
-| **Glide** | 이미지 로딩 |
-| **Timber** | 로깅 |
-| **ZXing** | QR 코드 처리 |
+| **Moshi** | JSON 직렬화 |
+| **Coroutines + Flow** | 비동기 처리 |
 
 ---
 
-## 💡 주요 구현 내용
+## ※ 핵심 구현 코드
 
-### 1. BaseUseCase - Flow 기반 API/DB 요청 추상화
+### 1. BaseUseCase - Flow 기반 비동기 처리
 
 ```kotlin
 open class BaseUseCase {
@@ -224,7 +222,7 @@ open class BaseUseCase {
 }
 ```
 
-### 2. BaseViewModel - 공통 UI 상태 관리
+### 2. BaseViewModel - UI 상태 관리
 
 ```kotlin
 abstract class BaseViewModel : ViewModel() {
@@ -232,104 +230,87 @@ abstract class BaseViewModel : ViewModel() {
     private val _eventFlow = MutableSharedFlow<Event>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    val _loading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val _loading = MutableStateFlow(false)
     val loading: StateFlow<Boolean> = _loading.asStateFlow()
 
     fun event(event: Event) = viewModelScope.launch {
         _eventFlow.emit(event)
     }
     
-    sealed class Event {
-        // 이벤트 정의
-    }
+    sealed class Event { /* 이벤트 정의 */ }
 }
 ```
 
-### 3. Hilt DI Module 구성
+### 3. Hilt DI Module
 
 ```kotlin
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiModule {
+object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(ApiClient.BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
+    fun provideAppInfoRepository(
+        dataSource: AppInfoRemoteDataSource
+    ): AppInfoRepository {
+        return AppInfoRepositoryImpl(dataSource)
     }
 }
 ```
 
-### 4. Repository 패턴 - 인터페이스와 구현 분리
+### 4. Fragment에서 StateFlow 수집
 
 ```kotlin
-// Domain Layer - Interface
-interface AppInfoRepository {
-    suspend fun getAppInfo(version: String): ApiRepo?
-}
+@AndroidEntryPoint
+class MainFragment : BaseFragment<FragmentMainBinding, PaymentViewModel>(...) {
 
-// Data Layer - Implementation
-class AppInfoRepositoryImpl @Inject constructor(
-    private val dataSource: AppInfoRemoteDataSource
-) : AppInfoRepository {
-    override suspend fun getAppInfo(version: String): ApiRepo? {
-        return dataSource.getAppInfo(version)
+    override val viewModel: PaymentViewModel by viewModels()
+
+    override fun observe() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.eventOrderList.collect { dbState ->
+                    when (dbState) {
+                        is DbState.Success -> adapter.replaceData(dbState.data)
+                        is DbState.Failure -> handleError(dbState.errorMessage)
+                        DbState.Empty -> { }
+                    }
+                }
+            }
+        }
     }
 }
 ```
 
 ---
 
-## 보안 고려사항
+## ※ 화면 구성
 
-- API Key는 `BuildConfig` 또는 `local.properties`로 관리
-- `local.properties`는 `.gitignore`에 포함
+| 화면 | 파일 | 설명 |
+|------|------|------|
+| 🏠 **메인** | `MainFragment.kt` | 주문 목록 조회 (RecyclerView) |
+| 📋 **상세** | `PaymentFragment.kt` | 결제/주문 상세, API 호출 |
+| ⚙️ **설정** | `MypageFragment.kt` | 마이페이지, 사용자 정보 |
+
+---
+
+## ※ 보안 고려사항
+
+- API Key / URL은 `BuildConfig` 또는 `local.properties`로 관리
+- 민감 정보는 `.gitignore`에 포함
 - Release 빌드 시 로깅 비활성화
 - ProGuard 난독화 적용
-- V3, 키보드 보안 라이브러리 적용 (잉카 SDK)
 
 ---
 
-## 주요 기능
+## ※ 학습 포인트
 
-| 기능 | 설명 |
-|------|------|
-| 🔐 **인증** | 로그인, 회원가입, 비밀번호 변경 |
-| 💳 **결제** | 결제 준비 → 결제 완료 Flow |
-| 📋 **주문 관리** | Room DB 기반 로컬 주문 내역 |
-| 👤 **마이페이지** | 사용자 정보 조회/수정 |
-
----
-
-## 빌드 및 실행
-
-```bash
-# 클론
-git clone https://github.com/your-username/nestpay-portfolio.git
-
-# local.properties 설정 (필요시)
-# sdk.dir=/path/to/your/android/sdk
-
-# 빌드
-./gradlew assembleDebug
-
-# 테스트
-./gradlew test
-```
+1. **Clean Architecture** - 관심사 분리로 테스트 용이성 & 유지보수성 향상
+2. **MVVM + StateFlow** - 반응형 UI 구현, Lifecycle-aware
+3. **Hilt DI** - 의존성 주입으로 결합도 감소
+4. **Repository 패턴** - 데이터 소스 추상화
+5. **UseCase 패턴** - 비즈니스 로직 캡슐화
 
 ---
 
-## 학습 포인트
-
-1. **Clean Architecture** 적용을 통한 관심사 분리
-2. **MVVM + StateFlow**로 반응형 UI 구현
-3. **Hilt**를 활용한 의존성 주입 설계
-4. **Repository 패턴**으로 데이터 소스 추상화
-5. **UseCase**를 통한 비즈니스 로직 캡슐화
-
----
 

@@ -1,12 +1,8 @@
 package com.nestpay.pg.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.nestpay.pg.data.db.OrderDatabase
 import com.nestpay.pg.data.model.local.OrderEntity
 import com.nestpay.pg.domain.model.local.Order
-import com.nestpay.pg.domain.model.remote.ApiPayReadyRepo
-import com.nestpay.pg.domain.model.remote.ApiPayRepo
-import com.nestpay.pg.domain.model.remote.ApiPayReq
 import com.nestpay.pg.domain.model.remote.ApiRepo
 import com.nestpay.pg.domain.usecase.local.GetOrderLocalUseCase
 import com.nestpay.pg.domain.usecase.remote.GetApiRepoUseCase
@@ -20,6 +16,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * 결제/주문 관련 ViewModel
+ *
+ * MVVM 패턴에서 View와 Model 사이의 중재자 역할을 합니다.
+ * UseCase를 통해 비즈니스 로직을 실행하고, StateFlow로 UI 상태를 관리합니다.
+ *
+ * 주요 기능:
+ * - 주문 목록 조회 (Local DB)
+ * - 주문 저장 (Local DB)
+ * - API 호출 상태 관리
+ */
 @HiltViewModel
 class PaymentViewModel @Inject constructor(
     private val getApiRepoUseCase: GetApiRepoUseCase,
@@ -27,51 +34,37 @@ class PaymentViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     companion object {
-
         private val TAG = PaymentViewModel::class.java.simpleName
     }
 
-    /*
-    * 결제 API
-    * */
-    private val _eventPayReadyApiRepo = MutableStateFlow<ApiState<ApiPayReadyRepo?>>(ApiState.Empty)
-    val eventPayReadyApiRepo: StateFlow<ApiState<ApiPayReadyRepo?>> = _eventPayReadyApiRepo
-    private val _eventPayApiRepo = MutableStateFlow<ApiState<ApiPayRepo?>>(ApiState.Empty)
-    val eventPayApiRepo: StateFlow<ApiState<ApiPayRepo?>> = _eventPayApiRepo
-
-    /*
-    * 일반 API
-    * */
+    // API 상태
     private val _eventApiRepo = MutableStateFlow<ApiState<ApiRepo?>>(ApiState.Empty)
     val eventApiRepo: StateFlow<ApiState<ApiRepo?>> = _eventApiRepo
 
-    /*
-    * 로컬 디비
-    * */
+    // Local DB 상태 - 주문 저장
     private val _eventOrderInsert = MutableStateFlow<DbState<String>>(DbState.Empty)
     val eventOrderInsert: StateFlow<DbState<String>> = _eventOrderInsert
 
+    // Local DB 상태 - 주문 목록
     private val _eventOrderList = MutableStateFlow<DbState<List<Order>>>(DbState.Empty)
     val eventOrderList: StateFlow<DbState<List<Order>>> = _eventOrderList
 
+    // Two-way DataBinding 필드
     val textProductName = MutableStateFlow("")
     val textProductPrice = MutableStateFlow("")
 
-    //상품주문 유효성 검사
+    /**
+     * 주문 버튼 클릭 이벤트 핸들러
+     * 유효성 검사 후 이벤트 발행
+     */
     fun onOrderClick() {
-
-        /*if (textProductName.value.length < 5) {
-            Timber.d("$TAG -> 상품명 : $textProductName")
-            event(Event.ShowProductNameDialog)
-        } else if (textProductPrice.value.length < 2) {
-            Timber.d("$TAG -> 결제금액 : $textProductPrice")
-            event(Event.ShowProductPriceDialog)
-        } else*/ event(Event.OnOrderClick)
+        event(Event.OnOrderClick)
     }
 
-    /*
-    로컬 주문내역 정보 호출
-    */
+    /**
+     * 로컬 주문 목록 조회
+     * Room DB에서 주문 내역을 가져옵니다.
+     */
     fun getOrderList() = viewModelScope.launch {
         _loading.value = true
         getOrderLocalUseCase.orderList(
@@ -84,12 +77,16 @@ class PaymentViewModel @Inject constructor(
                 _loading.value = false
                 _error.value = true
                 _eventOrderList.value = DbState.Failure(it)
-            })
+            }
+        )
     }
 
-    /*
-    로컬 주문내역 정보 저장
-    */
+    /**
+     * 주문 정보 저장
+     * Room DB에 새 주문을 저장합니다.
+     *
+     * @param orderEntity 저장할 주문 엔티티
+     */
     fun orderInsert(orderEntity: OrderEntity) = viewModelScope.launch(Dispatchers.IO) {
         _loading.value = true
         getOrderLocalUseCase.orderInsert(
@@ -103,16 +100,19 @@ class PaymentViewModel @Inject constructor(
                 _loading.value = false
                 _error.value = true
                 _eventOrderInsert.value = DbState.Failure(it)
-            })
+            }
+        )
     }
 
-    /*
-     유저정보 APi 호출
-    */
-    fun getUserInfoApi(auth: String) = viewModelScope.launch {
+    /**
+     * 앱 정보 API 호출
+     *
+     * @param version 앱 버전
+     */
+    fun getAppInfoApi(version: String) = viewModelScope.launch {
         _loading.value = true
-        getApiRepoUseCase.getUserInfoRepo(
-            auth,
+        getApiRepoUseCase.getAppInfoRepo(
+            version,
             scope = viewModelScope,
             onSuccess = {
                 _loading.value = false
@@ -122,46 +122,7 @@ class PaymentViewModel @Inject constructor(
                 _loading.value = false
                 _error.value = true
                 _eventApiRepo.value = ApiState.Failure(it)
-            })
-    }
-
-    /*
-     결제준비 APi 호출
-    */
-    fun getPayReadyApi(apiPayReq: ApiPayReq) = viewModelScope.launch {
-        _loading.value = true
-        getApiRepoUseCase.getPayReadyRepo(
-            "pk_keyin",
-            apiPayReq,
-            scope = viewModelScope,
-            onSuccess = {
-                _loading.value = false
-                _eventPayReadyApiRepo.value = ApiState.Success(it)
-            },
-            onError = {
-                _loading.value = false
-                _error.value = true
-                _eventPayReadyApiRepo.value = ApiState.Failure(it)
-            })
-    }
-
-    /*
-     결제완료 APi 호출
-    */
-    fun getPayApi(trxId: String) = viewModelScope.launch {
-        _loading.value = true
-        getApiRepoUseCase.getPayRepo(
-            "pk_keyin",
-            trxId,
-            scope = viewModelScope,
-            onSuccess = {
-                _loading.value = false
-                _eventPayApiRepo.value = ApiState.Success(it)
-            },
-            onError = {
-                _loading.value = false
-                _error.value = true
-                _eventPayApiRepo.value = ApiState.Failure(it)
-            })
+            }
+        )
     }
 }
