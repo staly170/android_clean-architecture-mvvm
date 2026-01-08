@@ -71,7 +71,7 @@
 
 ---
 
-## ※ 프로젝트 구조
+## ※ 프로젝트 구조 (일부)
 
 ```
 📦 com.nestpay.pg
@@ -140,13 +140,13 @@
     ├── 📂 di
     │   └── PgApplication.kt             # Hilt Application
     │
-    ├── 📂 view                          # UI (3개 화면 예시)
+    ├── 📂 view                          # UI
     │   ├── MainActivity.kt              # Single Activity
     │   ├── SplashActivity.kt
     │   ├── 📂 main
-    │   │   ├── MainFragment.kt          # 🏠 메인 (주문 목록)
-    │   │   ├── PaymentFragment.kt       # 📋 상세 (결제/주문)
-    │   │   └── MypageFragment.kt        # ⚙️ 설정 (마이페이지)
+    │   │   ├── MainFragment.kt          # 메인 (주문 목록)
+    │   │   ├── PaymentFragment.kt       # 상세 (결제/주문)
+    │   │   └── MypageFragment.kt        # ⚙설정 (마이페이지)
     │   └── 📂 adapter
     │       └── PayListAdapter.kt
     │
