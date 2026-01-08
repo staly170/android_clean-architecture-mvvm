@@ -284,7 +284,7 @@ class AppInfoRepositoryImpl @Inject constructor(
 
 ---
 
-## 🔐 보안 고려사항
+## 보안 고려사항
 
 - API Key는 `BuildConfig` 또는 `local.properties`로 관리
 - `local.properties`는 `.gitignore`에 포함
@@ -294,7 +294,7 @@ class AppInfoRepositoryImpl @Inject constructor(
 
 ---
 
-## 📱 주요 기능
+## 주요 기능
 
 | 기능 | 설명 |
 |------|------|
@@ -305,7 +305,7 @@ class AppInfoRepositoryImpl @Inject constructor(
 
 ---
 
-## 🚀 빌드 및 실행
+## 빌드 및 실행
 
 ```bash
 # 클론
@@ -323,7 +323,7 @@ git clone https://github.com/your-username/nestpay-portfolio.git
 
 ---
 
-## 📚 학습 포인트
+## 학습 포인트
 
 1. **Clean Architecture** 적용을 통한 관심사 분리
 2. **MVVM + StateFlow**로 반응형 UI 구현
