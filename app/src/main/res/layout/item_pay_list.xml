@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/text_pay_date_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/text_product_name_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2022.08.01" />
+
+        <TextView
+            android:id="@+id/text_product_name_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/text_product_price_value"
+            app:layout_constraintStart_toEndOf="@+id/text_pay_date_value"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="건강보조식품" />
+
+        <TextView
+            android:id="@+id/text_product_price_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/text_card_type_value"
+            app:layout_constraintStart_toEndOf="@+id/text_product_name_value"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1,230,456원" />
+
+        <TextView
+            android:id="@+id/text_card_type_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/text_card_number_value"
+            app:layout_constraintStart_toEndOf="@+id/text_product_price_value"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="하나카드" />
+
+        <TextView
+            android:id="@+id/text_card_number_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_card_type_value"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="7890" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

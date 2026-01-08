@@ -1,0 +1,60 @@
+package com.nestpay.pg.presentation.widget.extension
+
+import android.view.View
+import android.widget.ImageView
+import android.widget.RatingBar
+import android.widget.TextView
+import androidx.core.text.HtmlCompat
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+
+/**
+ * DataBinding
+ *
+ * DataBinding이 사용 된 xml 파일 내에 호출 부분이 선언 되어 있음.
+ * 어노테이션으로 선언 한 부분이 xml에서 호출 하는 ID
+ */
+
+@BindingAdapter("isUpdateVisible")
+fun bindVisible(view: View, isVisible: Boolean) {
+    view.visibility = if (isVisible) View.VISIBLE else View.GONE
+}
+/*
+@BindingAdapter("setItems")
+fun RecyclerView.setAdapterItems(items: MutableList<Movie>?) {
+    items?.let {
+        //(adapter as MovieAdapter).submitList(it.toMutableList())
+    }
+}
+
+@BindingAdapter("movieRating")
+fun RatingBar.setMovieRating(score: String) {
+    rating = (score.toFloatOrNull() ?: 0f) / 2
+}
+
+@BindingAdapter("urlImage")
+fun ImageView.setUrlImage(url: String) {
+    Glide.with(this).load(url)
+        .placeholder(R.drawable.ic_launcher_background)
+        .into(this)
+}
+
+@BindingAdapter("htmlText")
+fun TextView.setHtmlText(html: String) {
+    text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT)
+}
+
+@BindingAdapter("endlessScroll")
+fun RecyclerView.setEndlessScroll(
+    viewModel: MainViewModel,
+) {
+    val scrollListener =
+        object : EndlessRecyclerViewScrollListener(layoutManager as LinearLayoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                //viewModel.requestPagingMovie(totalItemsCount + 1)
+            }
+        }
+    addOnScrollListener(scrollListener)
+}*/

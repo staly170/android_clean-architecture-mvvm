@@ -1,0 +1,103 @@
+<resources>
+
+    <!--앱이름-->
+    <string name="app_name">NESTPAY-N</string>
+
+    <!--가맹점 데이터-->
+    <string-array name="franchise_array">
+        <item>우리샵</item>
+        <item>테스트샵</item>
+    </string-array>
+
+    <!--네비게이션 타이틀-->
+    <string name="menu_order">주문내역</string>
+    <string name="menu_pay">결제</string>
+    <string name="menu_mypage">마이페이지</string>
+
+    <!--입력박스 Hint-->
+    <string name="edit_id_hint">아이디를 입력해주세요.</string>
+    <string name="edit_password_hint">비밀번호를 입력해주세요.</string>
+    <string name="edit_name_hint">이름을 입력해주세요.</string>
+    <string name="edit_email_hint">이메일을 입력해주세요.</string>
+    <string name="edit_sign_password_hint">영문 대소문자, 숫자, 특수문자 포함 5글자 이상 입력해주세요.</string>
+    <string name="edit_sign_password_confirm_hint">입력하신 비밀번호를 다시 한번 입력해주세요.</string>
+    <string name="edit_order_product_name_hint">상품명을 입력해주세요.</string>
+    <string name="edit_order_pay_price_hint">결제금액을 입력해주세요.</string>
+    <string name="edit_order_memo_hint">요청사항을 입력해주세요.</string>
+
+    <!--버튼 타이틀-->
+    <string name="btn_login">로그인</string>
+    <string name="btn_sign">회원가입</string>
+    <string name="btn_confirm">확인</string>
+    <string name="btn_chang_passwd">비밀번호 변경</string>
+    <string name="btn_order">상품 주문</string>
+    <string name="btn_update">업데이트</string>
+    <string name="btn_auth">본인인증 하기</string>
+
+    <!--예외처리 메세지-->
+    <string name="msg_back">뒤로가기 버튼을 한번 더 누르면 종료됩니다.</string>
+    <string name="msg_id">아이디는 영문 대소문자, 숫자 포함 5글자 이상 입력해주세요.</string>
+    <string name="msg_password">비밀번호는 영문 대소문자, 숫자, 특수문자 포함 5글자 이상 입력해주세요..</string>
+    <string name="msg_re_password">비밀번호가 일치하지 않습니다.\n입력하신 비밀번호과\n동일하게 입력해주세요.</string>
+    <string name="msg_name">이름을 입력해주세요.</string>
+    <string name="msg_auth_name">본인인증 된 이름을 입력해주세요.</string>
+    <string name="msg_email">이메일 형식에 맞혀서 입력주세요.</string>
+    <string name="msg_wrong">아이디 또는 비밀번호가 맞지 않습니다.\n다시 한번 확인해주세요.</string>
+    <string name="msg_pay_product_name">상품명을 입력해주세요.</string>
+    <string name="msg_pay_product_price">결제금액을 입력해주세요.</string>
+    <string name="msg_pay_memo">요청사항을 입력해주세요.</string>
+    <string name="msg_auth_retry">본인인증 완료 후 회원가입을 진행해주세요.</string>
+
+    <!--알림팝업-->
+    <string name="text_card_btn_dialog_title01">나중에 할게요</string>
+    <string name="text_card_btn_dialog_title02">등록할게요</string>
+    <string name="text_card_unreg_dialog_title">등록된 아동급식카드가 없어요!</string>
+    <string name="text_card_unreg_dialog_content">가지고있는 아동급식카드를 앱카드로 등록하세요! 앱으로 아동급식사용처에서 결제가 가능합니다!</string>
+    <string name="text_app_update_dialog_content">새로운 NESTPAY-N\n업데이트 버전이 있습니다.\n업데이트를 위해 플레이스토어로 이동합니다.</string>
+    <string name="text_app_dialog_title">업데이트 안내</string>
+
+    <!--로그인-->
+    <string name="text_id_title">아이디</string>
+    <string name="text_password_title">비밀번호</string>
+    <string name="text_login_auto_title">자동로그인</string>
+    <string name="text_login_id_search_title">아이디가 기억나지 않아요!</string>
+    <string name="text_login_search_password_title">비밀번호 찾기</string>
+    <string name="text_login_search_id_title">아이디 찾기</string>
+    <string name="text_login_id_search"><u>아이디 찾기 ></u></string>
+    <string name="text_login_password_search_title">비밀번호를 잃어버렸어요.</string>
+    <string name="text_login_password_search"><u>비밀번호 찾기 ></u></string>
+    <string name="text_login_sign"><u>회원가입 ></u></string>
+    <string name="text_login_sign_guide_title">네스트페이 아이디가 없으세요?</string>
+
+    <!--비밀번호 찾기-->
+    <string name="text_search_password_change_title">비밀번호 변경하기</string>
+    <string name="text_search_password_change_new">신규 비밀번호</string>
+    <string name="text_search_content">본인인증을 클릭해 주세요.</string>
+    <string name="text_search_password_change_success">비밀번호 변경이 완료되었습니다.</string>
+
+    <!--회원가입-->
+    <string name="text_sign_all_agree">전체동의</string>
+    <string name="text_sign_name_title">이름</string>
+    <string name="text_sign_email_title">이메일</string>
+    <string name="text_sign_terms_person_title">개인정보처리방침 (필수)</string>
+    <string name="text_sign_terms_location_title">위치기반서비스 이용약관 (필수)</string>
+    <string name="text_sign_phone_certify_title">인증번호 입력하기</string>
+    <string name="text_sign_password_confirm_title">비밀번호 확인</string>
+    <string name="text_sign_success">회원가입이 완료되었습니다.</string>
+
+
+    <!--주문내역-->
+    <string name="text_pay_list_title">최근거래내역</string>
+    <string name="text_pay_date_title">결제일시</string>
+    <string name="text_card_type_title">카드사</string>
+    <string name="text_card_num_title">카드번호</string>
+
+    <!--결제-->
+    <string name="text_order_title">주문정보</string>
+    <string name="text_order_franchise_title">가맹점</string>
+    <string name="text_order_product_name_title">상품명</string>
+    <string name="text_order_pay_price_title">결제금액</string>
+    <string name="text_order_memo_title">요청사항</string>
+    <string name="text_order_success">상품결제가 완료 되었습니다.</string>
+
+</resources>

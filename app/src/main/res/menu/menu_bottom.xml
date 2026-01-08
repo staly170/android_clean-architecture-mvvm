@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.purmee.card.presentation.view.MainActivity">
+
+    <item
+        android:id="@+id/mainFragment"
+        android:icon="@drawable/ic_order"
+        android:orderInCategory="2"
+        android:title="@string/menu_order"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/paymentFragment"
+        android:icon="@drawable/ic_payment"
+        android:orderInCategory="2"
+        android:title="@string/menu_pay"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/mypageFragment"
+        android:icon="@drawable/ic_mypage"
+        android:orderInCategory="4"
+        android:title="@string/menu_mypage"
+        app:showAsAction="always" />
+</menu>
